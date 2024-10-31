@@ -1,0 +1,28 @@
+version: '3'
+services:
+  employee-mongo-db:
+    image: mongo
+    container_name: mongo-docker
+    networks:
+      - app-network
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express-docker
+    networks:
+      - app-network
+    ports:
+      - 28081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: employee-mongo-db
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: changeme
+      #ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadmin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
+networks:
+  app-network:
